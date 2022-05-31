@@ -1,0 +1,100 @@
+CREATE DATABASE fonoteca;
+USE fonoteca;
+
+CREATE TABLE genre(
+    genre_id INT AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    PRIMARY KEY(genre_id)
+);
+
+CREATE TABLE performance(
+    performance_id INT AUTO_INCREMENT,
+    genre_id INT NOT NULL,
+    title VARCHAR(200) NOT NULL,
+    duration DECIMAL(3, 2),
+    PRIMARY KEY(performance_id),
+    FOREIGN KEY(genre_id) REFERENCES genre(genre_id)
+);
+
+CREATE TABLE performer(
+    performer_id INT AUTO_INCREMENT,
+    name VARCHAR(200) NOT NULL,
+    birth_year INT,
+    gender CHAR(1) DEFAULT '-',
+    CONSTRAINT CHECK(gender IN ('M', 'F', '-')),
+    nationality VARCHAR(100),
+    PRIMARY KEY(performer_id)
+);
+
+CREATE TABLE performsin(
+    performer_id INT NOT NULL,
+    performance_id INT NOT NULL,
+    PRIMARY KEY(performer_id, performance_id),
+    FOREIGN KEY(performer_id) REFERENCES performer(performer_id),
+    FOREIGN KEY(performance_id) REFERENCES performance(performance_id)
+);
+
+INSERT INTO genre(genre_id, name) VALUES
+(0, 'Pop R&B'),
+(0, 'Pop'),
+(0, 'Rap'),
+(0, 'Indie'),
+(0, 'K-Pop'),
+(0, 'Electronic'),
+(0, 'Metal'),
+(0, 'Jazz'),
+(0, 'Folk'),
+(0, 'Hip-Hop'),
+(0, 'Pop Folk');
+
+INSERT INTO performance(performance_id, genre_id, title, duration) VALUES
+(0, 1, 'Heat Waves', 3.56),
+(0, 2, 'abcdefu', 2.48),
+(0, 3, 'Own Brand Freestyle', 2.56),
+(0, 2, 'Real Friends', 3.35),
+(0, 2, 'Never be the same', 3.49),
+(0, 2, 'Gibberish', 3.29),
+(0, 2, 'Lights Down Low', 3.51),
+(0, 4, 'Getting older', 4.04),
+(0, 5, 'The Feels', 3.51),
+(0, 5, 'Likey', 3.41),
+(0, 5, 'Magic Girl', 3.28),
+(0, 4, 'Oh, Death', 3.05),
+(0, 4, 'Make It Hurt', 2.36),
+(0, 6, 'Dreamy Night', 4.06);
+
+INSERT INTO performer(performer_id, name, birth_year, gender, nationality) VALUES
+(0, 'Glass Animals', NULL, DEFAULT, 'British'),
+(0, 'GAYLE', NULL, 'F', 'American'),
+(0, 'Dreya Mac', NULL, 'F', 'British'),
+(0, 'FelixThe1st', NULL, 'M', 'British'),
+(0, 'Finch Fetti', NULL, 'M', NULL),
+(0, 'Camilla Cabello', 1997, 'F', 'American'),
+(0, 'Max Schneider', 1992, 'M', 'American'),
+(0, 'Hoodie Allen', 1998, 'M', 'American'),
+(0, 'Gnash', 1993, 'M', 'American'),
+(0, 'Billie Eilish', 2001, 'F', 'American'),
+(0, 'TWICE', NULL, 'F', 'South Korean'),
+(0, 'Orange Caramel', NULL, 'F', 'South Korean'),
+(0, 'SUGR?', NULL, 'M', 'American'),
+(0, 'Lily Pichu', NULL, 'F', 'American');
+
+INSERT INTO performsin(performer_id, performance_id) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 3),
+(5, 3),
+(6, 4),
+(6, 5),
+(7, 6),
+(8, 6),
+(7, 7),
+(9, 7),
+(10, 8),
+(11, 9),
+(11, 10),
+(12, 11),
+(13, 12),
+(13, 13),
+(14, 14);
